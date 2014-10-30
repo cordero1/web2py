@@ -28,7 +28,7 @@ def guardar():
             f=open("C:\Users\Cordero\Desktop\prduino.txt", "w")
             f.write(guardar)
             f.close()
-            return dict(potenciometro= lista[0], puerta= lista[1], led= lista[2])
+            return dict(potenciometro= lista[0], puerta= lista[1], led= lista[2]) 
         except: pass
         
     if request.vars.led=='1': #datos[0]== "False":
@@ -37,10 +37,10 @@ def guardar():
             f=open("C:\Users\Cordero\Desktop\prduino.txt", "w")
             f.write(guardar)
             f.close()
-            return dict(potenciometro= lista[0], puerta= lista[1], led= lista[2]) 
+            return dict(potenciometro= lista[0], puerta= lista[1], led= lista[2])
         except:pass
     
-    return dict(potenciometro= request.vars.potenciometro, puerta= request.vars.puerta, led= request.vars.led_auxiliar) 
+    return dict(potenciometro= request.vars.potenciometro, puerta= request.vars.puerta, led= request.vars.led_auxiliar)
     
 def index():
     response.flash= 'Bienvenido'
@@ -97,7 +97,3 @@ def api():
         }
     return Collection(db).process(request,response,rules)
 
-"""def datos():
-    form= SQLFORM.grid(db.datos)
-    
-    return locals()"""
