@@ -1,0 +1,67 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{extend 'layout.html'}}
+{{include 'svg.html'}}
+<input type="button" id="onn" value= "ONN">
+<input type="button" id="off" value= "OF">
+
+
+<script languague= "javascript">
+    
+    var led=0;
+    var diccionario={};
+    var potenciometro_auxiliar=0;
+    var puerta_auxiliar=0;
+    var led_auxiliar=0;
+    
+    function temporizador(){
+        
+        diccionario={'led': led, 'potenciometro':potenciometro_auxiliar, 'puerta': puerta_auxiliar, 'led_auxiliar': led_auxiliar };
+        jQuery.post("{{=URL('default','guardar.json')}}", diccionario, {contentType: 'application/json'} )
+              .done(function(datos_recibidos) {
+                  window.console.log(datos_recibidos['potenciometro']);
+                  window.console.log(datos_recibidos['puerta']);
+                  window.console.log(datos_recibidos['led']);
+                  if (datos_recibidos['led']== "0"){jQuery("#led").attr('style', 'fill:red');}
+                  if (datos_recibidos['led']== "1"){jQuery("#led").attr('style', 'fill:green');}
+                  
+                  if (datos_recibidos['puerta']== "0"){
+                      jQuery("#puerta").attr('width', '168.57143');
+                      jQuery("#manilla").attr('style', 'fill:2b1100');
+                      
+                      }
+                  if (datos_recibidos['puerta']== "1"){
+                       jQuery("#puerta").attr('width', '10.57143');
+                       jQuery("#manilla").attr('style', 'fill:transparent');
+                          
+                       }
+                       
+                      
+                 jQuery("#barra").attr("height",datos_recibidos['potenciometro']) ;
+                 potenciometro_auxiliar= datos_recibidos['potenciometro'];
+                 puerta_auxiliar= datos_recibidos['puerta'];
+                 led_auxiliar= datos_recibidos['led'];
+                  
+                  });
+        
+        }
+    
+    
+    jQuery(document).ready(function(){
+        
+        
+            jQuery("#onn").click(function(){
+                
+                    led= 1;
+                    
+                });
+                
+            jQuery("#off").click(function(){
+                
+                    led= 0;
+                   
+                });
+
+       window.setInterval(temporizador,40)
+          
+        });
+</script>
